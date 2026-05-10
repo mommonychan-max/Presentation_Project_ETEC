@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-lg-10">
+        <div class="card bg-black text-light border-0 shadow-lg rounded-4 overflow-hidden">
+            <div class="row g-0">
+                <div class="col-md-4">
+                    {% if movie.image %}
+                    <img src="{{ url_for('static', filename='uploads/' + movie.image) }}"
+                        class="img-fluid h-100 w-100 object-fit-cover" alt="{{ movie.title }}">
+                    {% endif %}
+                </div>
+                <div class="col-md-8">
+                    <div class="card-body p-4">
+                        <h2 class="card-title text-warning fw-bold">{{ movie.title }}</h2>
+                        <p><strong>Genre:</strong> {{ movie.genre }}</p>
+                        <p><strong>Year:</strong> {{ movie.movie_year }}</p>
+                        <p><strong>Description:</strong></p>
+                        <p class="text-secondary">{{ movie.description }}</p>
+
+                        <a href="{{ url_for('edit_movie', id=movie.id) }}" class="btn btn-warning">Edit Movie</a>
+                        <a href="{{ url_for('index') }}" class="btn btn-outline-light">Back</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

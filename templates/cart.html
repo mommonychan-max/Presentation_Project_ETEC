@@ -1,0 +1,93 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h2 class="text-warning mb-4">Your Booked Tickets 🎟</h2>
+
+{% if movies %}
+
+<div class="row">
+    {% for movie in movies %}
+    <div class="col-md-4">
+        <div class="card bg-secondary text-light mb-3 shadow">
+
+            {% if movie.image %}
+            <img src="{{ url_for('static', filename='uploads/' + movie.image) }}" class="card-img-top"
+                style="height: 250px; object-fit: cover;">
+            {% else %}
+            <div class="bg-dark text-center py-4 text-white-50">No Poster</div>
+            {% endif %}
+
+            <div class="card-body">
+                <h5 class="card-title">{{ movie.title }}</h5>
+                <p class="card-text text-white-50">{{ movie.genre }} | {{ movie.movie_year }}</p>
+            </div>
+
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+<!-- QR
+<div class="d-flex justify-content-between align-items-start mt-4"> -->
+
+
+    <div>
+        <p class="text-white-50">Total: <strong class="text-warning">{{ movies|length }} ticket(s) × $5 = ${{
+                movies|length * 5 }}</strong></p>
+        <a href="{{ url_for('checkout') }}" class="btn btn-warning btn-lg">
+            Buy Now
+        </a>
+    </div>
+
+    <!-- RIGHT: QR Code Upload -->
+    <!-- <div class="text-center">
+        <p class="text-white-50 mb-2" style="font-size: 12px; text-transform: uppercase;">Payment QR Code</p>
+        <div style="
+            width: 160px;
+            height: 160px;
+            border: 3px dashed #ffc107;
+            border-radius: 8px;
+            background-color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            cursor: pointer;
+        " onclick="document.getElementById('qrUpload').click()">
+            <img id="qrPreview" src="" alt="QR Code"
+                style="width: 140px; height: 140px; object-fit: contain; display: none;">
+            <span id="qrPlaceholder" style="color: #aaa; font-size: 12px;">📷 Upload QR</span>
+        </div>
+        <input type="file" id="qrUpload" accept="image/*" style="display: none;" onchange="previewQR(event)">
+    </div>
+
+</div> -->
+
+{% else %}
+
+<div class="text-center mt-5">
+    <p class="text-white-50 fs-5">Your cart is empty.</p>
+    <a href="{{ url_for('index') }}" class="btn btn-outline-warning">Browse Movies</a>
+</div>
+
+{% endif %}
+
+<!-- <script>
+    function previewQR(event) {
+        const file = event.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                const preview = document.getElementById('qrPreview');
+                const placeholder = document.getElementById('qrPlaceholder');
+                preview.src = e.target.result;
+                preview.style.display = 'block';
+                placeholder.style.display = 'none';
+            };
+            reader.readAsDataURL(file);
+        }
+    }
+</script> -->
+
+{% endblock %}

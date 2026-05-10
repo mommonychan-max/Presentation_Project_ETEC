@@ -1,0 +1,38 @@
+body {
+    font-family: 'Segoe UI', sans-serif;
+}
+
+.hero-section {
+    min-height: 45vh;
+    background:
+        linear-gradient(rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0.75)),
+        url('https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?auto=format&fit=crop&w=1600&q=80') center/cover no-repeat;
+}
+
+.movie-card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border-radius: 18px;
+    overflow: hidden;
+}
+
+.movie-card:hover {
+    transform: translateY(-8px);
+}
+
+.card-img-top {
+    height: 360px;
+    object-fit: cover;
+}
+
+.form-control {
+    border-radius: 12px;
+    padding: 12px;
+}
+
+.btn {
+    border-radius: 12px;
+}
+
+textarea {
+    resize: none;
+}
