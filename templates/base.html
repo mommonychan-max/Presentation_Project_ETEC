@@ -10,7 +10,13 @@
 <body>
 
     <div class="sidebar">
-        <h2>🎬 ETEC</h2>
+        <div class="logo-box">
+
+            <img src="{{ url_for('static', filename='logo.png') }}" alt="ETEC Logo" class="logo">
+
+            <h2>ETEC Theater</h2>
+
+        </div>
 
         <a href="{{ url_for('index') }}">🏠 Dashboard</a>
         <a href="{{ url_for('cart') }}">🛒 Cart</a>

@@ -3,14 +3,14 @@
 {% block content %}
 
 <div class="text-center">
-    <h2 class="text-danger">Delete Movie</h2>
+    <h2>Delete Movie</h2>
 
-    <div class="card bg-dark text-light p-3 mt-3">
+    <div class="card mt-3">
         <h4>{{ movie.title }}</h4>
         <p>Are you sure you want to delete this movie?</p>
 
-        <form method="POST">
-            <button type="submit" class="btn btn-danger">Yes Delete</button>
+        <form method="POST" class="delete-form">
+            <button type="submit" class="btn btn-danger">Delete</button>
             <a href="{{ url_for('index') }}" class="btn btn-secondary">Cancel</a>
         </form>
     </div>

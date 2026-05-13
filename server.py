@@ -99,22 +99,28 @@ def add_movie():
 
 
 # ================= DELETE MOVIE (ADMIN ONLY) =================
-@app.route('/delete/<int:id>')
+@app.route('/delete/<int:id>', methods=['GET', 'POST'])
 def delete_movie(id):
 
     if session.get('role') != 'admin':
         return redirect(url_for('index'))
 
     db = get_db()
-    cursor = db.cursor()
-
-    cursor.execute("DELETE FROM movies WHERE id=%s", (id,))
-    db.commit()
-
+    cursor = db.cursor(dictionary=True)
+    cursor.execute('SELECT * FROM movies WHERE id=%s', (id,))
+    movie = cursor.fetchone()
     cursor.close()
-    db.close()
 
-    return redirect(url_for('index'))
+    if request.method == 'POST':
+        db = get_db()
+        cursor = db.cursor()
+        cursor.execute("DELETE FROM movies WHERE id=%s", (id,))
+        db.commit()
+        cursor.close()
+        db.close()
+        return redirect(url_for('index'))
+
+    return render_template('delete_movie.html', movie=movie)
 
 
 # ================= EDIT MOVIE (ADMIN ONLY) =================
@@ -254,6 +260,20 @@ def add_to_cart(id):
     return redirect(url_for('index'))
 
 
+@app.route('/remove_from_cart/<int:id>', methods=['POST'])
+def remove_from_cart(id):
+
+    if not session.get('user'):
+        return redirect(url_for('login'))
+
+    cart = session.get('cart', [])
+
+    if id in cart:
+        cart.remove(id)
+        session['cart'] = cart
+
+    return redirect(url_for('cart'))
+
 @app.route('/cart')
 def cart():
 
@@ -275,7 +295,9 @@ def cart():
     cursor.close()
     db.close()
 
-    return render_template('cart.html', movies=movies)
+    total = len(movies) * 5
+
+    return render_template('cart.html', movies=movies, total=total)
 
 @app.route('/checkout')
 def checkout():
@@ -298,7 +320,7 @@ def checkout():
     cursor.close()
     db.close()
 
-    total = len(movies) * 5  # 💰 simple ticket price example
+    total = len(movies) * 5  #  simple ticket price example
 
     receipt = {
         "user": session['user'],
