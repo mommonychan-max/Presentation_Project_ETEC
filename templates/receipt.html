@@ -1,43 +1,33 @@
-{% extends 'base.html' %}
+{% extends "base.html" %}
+
+{% block title %}Receipt{% endblock %}
+{% block page_title %}Receipt{% endblock %}
 
 {% block content %}
 
-<div class="container" style="max-width: 600px;">
+<div class="receipt-box">
 
-    <div class="text-center mb-4">
-        <h2 class="text-success">Booking Successful!</h2>
-        <p class="text-white-50">Thank you, <strong class="text-warning">{{ receipt.user }}</strong>!</p>
+    <h2>🎟 Payment Receipt</h2>
+
+    <p><strong>Customer:</strong> {{ receipt.user }}</p>
+
+    <hr>
+
+    {% for movie in receipt.movies %}
+    <div class="receipt-item">
+        <span>{{ movie.title }}</span>
+        <strong>$5</strong>
+    </div>
+    {% endfor %}
+
+    <hr>
+
+    <div class="receipt-total">
+        <span>Total</span>
+        <strong>${{ receipt.total }}</strong>
     </div>
 
-    <div class="card bg-secondary text-light p-4 shadow">
-
-        <h4 class="text-center mb-3">Receipt</h4>
-
-        <hr class="border-light">
-
-        <h6 class="text-white-50 text-uppercase mb-2">Movies Booked</h6>
-
-        {% for movie in receipt.movies %}
-        <div class="d-flex justify-content-between align-items-center py-2 border-bottom border-secondary">
-            <span>{{ movie.title }}</span>
-            <span class="text-warning">$5</span>
-        </div>
-        {% endfor %}
-
-        <hr class="border-light">
-
-        <div class="d-flex justify-content-between align-items-center">
-            <h5 class="mb-0">Total</h5>
-            <h4 class="text-warning mb-0">${{ receipt.total }}</h4>
-        </div>
-
-    </div>
-
-    <div class="text-center mt-4">
-        <a href="{{ url_for('index') }}" class="btn btn-warning btn-lg">
-            Back to Movies
-        </a>
-    </div>
+    <a href="{{ url_for('index') }}" class="checkout-btn">Back Dashboard</a>
 
 </div>
 
