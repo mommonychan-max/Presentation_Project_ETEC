@@ -367,7 +367,48 @@ def invoice():
 
     return render_template('invoice.html', invoice=invoice)
 
+# ================= RATE MOVIE =================
+@app.route('/rate/<int:id>/<int:star>')
+def rate_movie(id, star):
 
+    if not session.get('user'):
+        return redirect(url_for('login'))
+
+    db = get_db()
+    cursor = db.cursor()
+
+    cursor.execute(
+        "UPDATE movies SET rating=%s WHERE id=%s",
+        (star, id)
+    )
+
+    db.commit()
+    cursor.close()
+    db.close()
+
+    return redirect(url_for('movie_detail', id=id))
+
+
+# ================= TOP RATED =================
+@app.route('/top-rated')
+def top_rated():
+
+    if not session.get('user'):
+        return redirect(url_for('login'))
+
+    db = get_db()
+    cursor = db.cursor(dictionary=True)
+
+    cursor.execute(
+        "SELECT * FROM movies WHERE rating >= 3 ORDER BY rating DESC"
+    )
+
+    movies = cursor.fetchall()
+
+    cursor.close()
+    db.close()
+
+    return render_template('top_rated.html', movies=movies)
 
 
 @app.route('/confirm_payment', methods=['POST'])
