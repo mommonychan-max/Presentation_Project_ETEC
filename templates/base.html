@@ -2,44 +2,102 @@
 <html lang="en">
 
 <head>
+
     <meta charset="UTF-8">
-    <title>{% block title %}ETEC Cinema{% endblock %}</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+
+    <title>
+        {% block title %}ETEC Cinema{% endblock %}
+    </title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='styles.css') }}">
+
 </head>
 
 <body>
 
+    <!-- SIDEBAR -->
     <div class="sidebar">
+
+        <!-- LOGO -->
         <div class="logo-box">
 
-            <img src="{{ url_for('static', filename='logo.png') }}" alt="ETEC Logo" class="logo">
+            <img src="{{ url_for('static', filename='logo.png') }}"
+                 alt="ETEC Logo"
+                 class="logo">
 
             <h2>ETEC Theater</h2>
 
         </div>
 
-        <a href="{{ url_for('index') }}">🏠 Dashboard</a>
-        <a href="{{ url_for('cart') }}">🛒 Cart</a>
+        <!-- DASHBOARD -->
+        <a href="{{ url_for('index') }}">
+            🏠 Dashboard
+        </a>
 
-        {% if session.get('role') == 'admin' %}
-        <a href="{{ url_for('add_movie') }}">➕ Add Movie</a>
+        <!-- TOP RATED -->
+        <a href="{{ url_for('top_rated') }}">
+            ⭐️ Top Rated
+        </a>
+
+        <!-- USER ONLY -->
+        {% if session.get('role') != 'admin' %}
+
+        <a href="{{ url_for('cart') }}">
+            🛒 Cart
+        </a>
+
         {% endif %}
 
-        <a href="{{ url_for('logout') }}" class="logout-btn">🚪 Logout</a>
+        <!-- ADMIN ONLY -->
+        {% if session.get('role') == 'admin' %}
+
+        <a href="{{ url_for('add_movie') }}">
+            ➕ Add Movie
+        </a>
+
+        {% endif %}
+
+        <!-- LOGOUT FOR EVERYONE -->
+        <a href="{{ url_for('logout') }}"
+           class="logout-btn">
+
+            🚪 Logout
+
+        </a>
+
     </div>
 
+    <!-- MAIN CONTENT -->
     <div class="main">
 
+        <!-- TOPBAR -->
         <div class="topbar">
+
             <div>
-                <h1>{% block page_title %}{% endblock %}</h1>
-                <p>Welcome, {{ session.get('user') }}</p>
+
+                <h1>
+                    {% block page_title %}
+                    {% endblock %}
+                </h1>
+
+                <p>
+                    Welcome, {{ session.get('user') }}
+                </p>
+
             </div>
 
-            <span class="role-badge">{{ session.get('role') }}</span>
+            <span class="role-badge">
+
+                {{ session.get('role') }}
+
+            </span>
+
         </div>
 
-        {% block content %}{% endblock %}
+        <!-- PAGE CONTENT -->
+        {% block content %}
+        {% endblock %}
 
     </div>
 
