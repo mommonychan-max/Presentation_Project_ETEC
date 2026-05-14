@@ -1,0 +1,242 @@
+{% extends "base.html" %} {% block title %}Machine Invoice{% endblock %} {%
+block content %}
+
+<style>
+  .receipt-page {
+    display: flex;
+    justify-content: center;
+    padding: 40px 15px;
+    /* background: #f3f4f6; */
+  }
+
+  .machine-receipt {
+    width: 360px;
+    background: #fff;
+    padding: 25px 22px;
+    font-family: "Courier New", monospace;
+    color: #111;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+    border-radius: 4px;
+  }
+
+  .receipt-top {
+    text-align: center;
+    border-bottom: 1px dashed #111;
+    padding-bottom: 15px;
+    margin-bottom: 15px;
+  }
+
+  .receipt-top h2 {
+    margin: 0;
+    font-size: 22px;
+    letter-spacing: 1px;
+  }
+
+  .receipt-top p {
+    margin: 5px 0;
+    font-size: 13px;
+  }
+
+  .receipt-info {
+    font-size: 13px;
+    border-bottom: 1px dashed #111;
+    padding-bottom: 12px;
+    margin-bottom: 12px;
+  }
+
+  .receipt-info div {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 5px;
+  }
+
+  .item-header,
+  .receipt-item,
+  .receipt-total {
+    display: flex;
+    justify-content: space-between;
+    font-size: 13px;
+  }
+  .movie-name {
+    width: 210px;
+    overflow: hidden; 
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    color: #111;
+    font-weight: bold;
+  }
+  .movie-price {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    color: #111;
+    font-weight: bold;
+  }
+
+  .item-header {
+    font-weight: bold;
+    border-bottom: 1px dashed #111;
+    padding-bottom: 8px;
+    margin-bottom: 8px;
+  }
+
+  .receipt-item {
+    padding: 6px 0;
+  }
+
+  .movie-name {
+    width: 210px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+
+  .receipt-total {
+    border-top: 1px dashed #111;
+    margin-top: 12px;
+    padding-top: 12px;
+    font-size: 18px;
+    font-weight: bold;
+  }
+
+  .paid {
+    text-align: center;
+    margin: 18px 0;
+    padding: 8px;
+    border: 2px solid #111;
+    font-size: 18px;
+    font-weight: bold;
+    letter-spacing: 2px;
+  }
+
+  .barcode {
+    text-align: center;
+    font-size: 34px;
+    letter-spacing: 2px;
+    margin-top: 15px;
+  }
+
+  .thanks {
+    text-align: center;
+    font-size: 13px;
+    margin-top: 15px;
+    border-top: 1px dashed #111;
+    padding-top: 12px;
+  }
+
+  .btn-area {
+    margin-top: 25px;
+    display: flex;
+    gap: 10px;
+  }
+
+  .btn {
+    flex: 1;
+    text-align: center;
+    background: #2563eb;
+    color: white;
+    padding: 12px;
+    border-radius: 10px;
+    text-decoration: none;
+    font-family: Arial, sans-serif;
+    font-weight: bold;
+  }
+
+  .print-btn {
+    background: #16a34a;
+    border: none;
+    cursor: pointer;
+  }
+
+  @media print {
+    body * {
+      visibility: hidden;
+    }
+
+    .machine-receipt,
+    .machine-receipt * {
+      visibility: visible;
+    }
+
+    .machine-receipt {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 320px;
+      box-shadow: none;
+    }
+
+    .btn-area {
+      display: none;
+    }
+  }
+</style>
+
+<div class="receipt-page">
+  <div>
+    <div class="machine-receipt">
+      <div class="receipt-top">
+        <h2>CINEMA TICKET</h2>
+        <p>OFFICIAL PAYMENT RECEIPT</p>
+        <p>Phnom Penh Cinema</p>
+        <p>Tel: 012 345 678</p>
+      </div>
+
+      <div class="receipt-info">
+        <div>
+          <span>Receipt No:</span>
+          <span>#INV{{ invoice.total }}{{ invoice.movies|length }}</span>
+        </div>
+
+        <div>
+          <span>Customer:</span>
+          <span>{{ invoice.user }}</span>
+        </div>
+
+        <div>
+          <span>Date:</span>
+          <span>{{ invoice.date if invoice.date else "Today" }}</span>
+        </div>
+
+        <div>
+          <span>Status:</span>
+          <span>PAID</span>
+        </div>
+      </div>
+
+      <div class="item-header">
+        <span>ITEM</span>
+        <span>PRICE</span>
+      </div>
+
+      {% for movie in invoice.movies %}
+      <div class="receipt-item">
+        <span class="movie-name">{{ movie.title }}</span>
+        <span class="movie-price">$5.00</span>
+      </div>
+      {% endfor %}
+
+      <div class="receipt-total">
+        <span>TOTAL</span>
+        <span>${{ invoice.total }}.00</span>
+      </div>
+
+      <div class="paid">PAYMENT SUCCESS</div>
+
+      <div class="barcode">||||| || ||| |||||</div>
+
+      <div class="thanks">
+        <p>Thank you for your purchase!</p>
+        <p>Please keep this receipt.</p>
+      </div>
+    </div>
+
+    <div class="btn-area">
+      <button onclick="window.print()" class="btn print-btn">🖨 Print</button>
+
+      <a href="{{ url_for('index') }}" class="btn"> Back Home </a>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
