@@ -26,11 +26,11 @@
             <div class="actions">
                 <a href="{{ url_for('movie_detail', id=movie.id) }}" class="view-btn">View</a>
                 {% if session.get('role') != 'admin' %}
-                
+
                 <a href="{{ url_for('add_to_cart', id=movie.id) }}" class="cart-btn">
                     Add Cart
                 </a>
-                
+
                 {% endif %}
 
                 {% if session.get('role') == 'admin' %}
@@ -39,6 +39,7 @@
                 {% endif %}
             </div>
         </div>
+       
 
     </div>
     {% else %}

@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+
+{% block title %}Top Rated{% endblock %}
+{% block page_title %}Top Rated Movies{% endblock %}
+
+{% block content %}
+
+<div class="movie-grid">
+
+    {% for movie in movies %}
+
+    <div class="movie-card">
+
+        {% if movie.image %}
+        <img src="{{ url_for('static', filename='uploads/' + movie.image) }}">
+        {% else %}
+        <div class="no-image">No Image</div>
+        {% endif %}
+
+        <div class="movie-info">
+
+            <h3>{{ movie.title }}</h3>
+
+            <p><strong>Genre:</strong> {{ movie.genre }}</p>
+
+            <p><strong>Rating:</strong> {{ movie.rating }} ⭐</p>
+
+            <div class="actions">
+
+                <a href="{{ url_for('movie_detail', id=movie.id) }}" class="view-btn">
+                    View
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    {% else %}
+
+    <div class="empty-box">
+        <h2>No Top Rated Movies Yet</h2>
+        <p>Rate movies 3 stars or higher to show them here.</p>
+    </div>
+
+    {% endfor %}
+
+</div>
+
+{% endblock %}
