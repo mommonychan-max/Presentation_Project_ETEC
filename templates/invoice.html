@@ -1,0 +1,182 @@
+{% extends "base.html" %} {% block title %}Payment{% endblock %} {% block
+page_title %}Payment{% endblock %} {% block content %}
+
+<style>
+
+  .payment-wrapper {
+    display: flex;
+    justify-content: center;
+    padding: 40px 20px;
+  }
+
+  .payment-card {
+    width: 100%;
+    max-width: 550px;
+    background: #ffffff;
+    border-radius: 22px;
+    padding: 40px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+  }
+
+  .brand {
+    text-align: center;
+    font-size: 34px;
+    font-weight: bold;
+    color: #22c55e;
+    margin-bottom: 25px;
+  }
+
+  .amount {
+    text-align: center;
+    font-size: 52px;
+    font-weight: bold;
+    color: #111827;
+  }
+
+  .due-date {
+    text-align: center;
+    color: #6b7280;
+    margin-top: 5px;
+    margin-bottom: 30px;
+    font-size: 17px;
+  }
+
+  .invoice-info {
+    border-top: 1px solid #e5e7eb;
+    border-bottom: 1px solid #e5e7eb;
+    padding: 20px 0;
+  }
+
+  .invoice-row {
+    display: flex;
+    margin-bottom: 14px;
+  }
+
+  .invoice-row:last-child {
+    margin-bottom: 0;
+  }
+
+  .invoice-row label {
+    width: 90px;
+    color: #6b7280;
+    font-weight: 600;
+  }
+
+  .invoice-row span {
+    color: #111827;
+    font-weight: 500;
+  }
+
+  .qr-box {
+    text-align: center;
+    margin-top: 35px;
+  }
+
+  .qr-box img {
+    width: 260px;
+    max-width: 100%;
+    background: white;
+    padding: 12px;
+    border-radius: 16px;
+    border: 1px solid #e5e7eb;
+  }
+
+  .bank-name {
+    margin-top: 15px;
+    font-size: 22px;
+    font-weight: bold;
+    color: #111827;
+  }
+
+  .scan-text {
+    margin-top: 8px;
+    color: #6b7280;
+    font-size: 15px;
+  }
+
+  .pay-btn {
+    width: 100%;
+    margin-top: 35px;
+    background: #22c55e;
+    color: white;
+    border: none;
+    padding: 16px;
+    border-radius: 14px;
+    font-size: 20px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+  }
+
+  .pay-btn:hover {
+    background: #16a34a;
+  }
+
+  .cart-link {
+    text-align: center;
+    margin-top: 20px;
+  }
+
+  .cart-link a {
+    text-decoration: none;
+    color: #6b7280;
+    font-weight: 600;
+  }
+
+  .footer {
+    text-align: center;
+    margin-top: 25px;
+    color: #9ca3af;
+    font-size: 14px;
+  }
+</style>
+
+<div class="payment-wrapper">
+  <div class="payment-card">
+    <div class="brand">🚀 Movie Payment</div>
+
+    <div class="amount">${{ invoice.total }}</div>
+
+    <div class="due-date">Payment Invoice</div>
+
+    <div class="invoice-info">
+      <div class="invoice-row">
+        <label>Customer</label>
+        <span>{{ invoice.user }}</span>
+      </div>
+
+      <div class="invoice-row">
+        <label>From</label>
+        <span>ETEC Theater</span>
+      </div>
+
+      <div class="invoice-row">
+        <label>Memo</label>
+        <span>Please complete your payment.</span>
+      </div>
+    </div>
+
+    <form action="{{ url_for('confirm_payment') }}" method="POST">
+      <div class="qr-box">
+        <img
+          src="{{ url_for('static', filename='images/qr-bank.jpg') }}"
+          alt="QR Code"
+        />
+
+        <div class="bank-name">ABA Bank</div>
+
+        <div class="scan-text">Scan QR Code to pay</div>
+      </div>
+
+      <button type="submit" class="pay-btn">Pay ${{ invoice.total }}</button>
+    </form>
+
+    <div class="cart-link">
+      <a href="{{ url_for('cart') }}"> ← Back to Cart </a>
+    </div>
+
+    <div class="footer">Powered by Flask Payment System</div>
+  </div>
+</div>
+
+{% endblock %}

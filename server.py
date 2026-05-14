@@ -328,10 +328,44 @@ def checkout():
         "total": total
     }
 
-    # clear cart after buy
-    session['cart'] = []
-
     return render_template('receipt.html', receipt=receipt)
+
+# ================= INVOICE =================
+@app.route('/invoice')
+def invoice():
+
+    if not session.get('user'):
+        return redirect(url_for('login'))
+
+    cart_items = session.get('cart', [])
+
+    if not cart_items:
+        return redirect(url_for('cart'))
+
+    db = get_db()
+    cursor = db.cursor(dictionary=True)
+
+    format_strings = ','.join(['%s'] * len(cart_items))
+
+    cursor.execute(
+        f"SELECT * FROM movies WHERE id IN ({format_strings})",
+        tuple(cart_items)
+    )
+
+    movies = cursor.fetchall()
+
+    cursor.close()
+    db.close()
+
+    total = len(movies) * 5
+
+    invoice = {
+        "user": session['user'],
+        "movies": movies,
+        "total": total
+    }
+
+    return render_template('invoice.html', invoice=invoice)
 
 # ================= RATE MOVIE =================
 @app.route('/rate/<int:id>/<int:star>')
@@ -376,6 +410,48 @@ def top_rated():
 
     return render_template('top_rated.html', movies=movies)
 
+
+@app.route('/confirm_payment', methods=['POST'])
+def confirm_payment():
+
+    if not session.get('user'):
+        return redirect(url_for('login'))
+
+    cart_items = session.get('cart', [])
+
+    if not cart_items:
+        return redirect(url_for('cart'))
+
+    db = get_db()
+    cursor = db.cursor(dictionary=True)
+
+    format_strings = ','.join(['%s'] * len(cart_items))
+
+    cursor.execute(
+        f"SELECT * FROM movies WHERE id IN ({format_strings})",
+        tuple(cart_items)
+    )
+
+    movies = cursor.fetchall()
+
+    cursor.close()
+    db.close()
+
+    total = len(movies) * 5
+
+    invoice = {
+        "user": session.get("user"),
+        "movies": movies,
+        "total": total
+    }
+
+    # clear cart after payment
+    session['cart'] = []
+
+    return render_template(
+        'payment_success.html',
+        invoice=invoice
+    )
 
 # ================= RUN =================
 if __name__ == '__main__':

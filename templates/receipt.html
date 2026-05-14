@@ -1,34 +1,164 @@
-{% extends "base.html" %}
+{% extends "base.html" %} {% block title %}Receipt{% endblock %} {% block
+page_title %}Receipt{% endblock %} {% block content %}
 
-{% block title %}Receipt{% endblock %}
-{% block page_title %}Receipt{% endblock %}
+<style>
+  .receipt-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 40px 20px;
+  }
 
-{% block content %}
+  .receipt-box {
+    width: 100%;
+    max-width: 550px;
+    background: #0f172a;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 18px;
+    padding: 30px;
+    color: #ffffff;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.35);
+  }
 
-<div class="receipt-box">
+  .receipt-header {
+    text-align: center;
+    margin-bottom: 25px;
+  }
 
-    <h2>🎟 Payment Receipt</h2>
+  .receipt-header h2 {
+    margin: 0;
+    font-size: 30px;
+    font-weight: 700;
+    color: #ffffff;
+  }
 
-    <p><strong>Customer:</strong> {{ receipt.user }}</p>
+  .receipt-header p {
+    margin-top: 8px;
+    color: #94a3b8;
+    font-size: 14px;
+  }
 
-    <hr>
+  .customer-box {
+    background: #111c34;
+    padding: 14px 18px;
+    border-radius: 12px;
+    margin-bottom: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    font-size: 15px;
+  }
+
+  .customer-box strong {
+    color: #ffffff;
+  }
+
+  .receipt-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    font-size: 16px;
+  }
+
+  .receipt-item:last-child {
+    border-bottom: none;
+  }
+
+  .movie-price {
+    font-weight: bold;
+    color: #60a5fa;
+  }
+
+  .receipt-total {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 25px;
+    padding-top: 20px;
+    border-top: 2px dashed rgba(255, 255, 255, 0.15);
+  }
+
+  .receipt-total span {
+    font-size: 22px;
+    font-weight: 600;
+  }
+
+  .receipt-total strong {
+    font-size: 32px;
+    color: #3b82f6;
+  }
+
+  .receipt-footer {
+    margin-top: 30px;
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    flex-wrap: wrap;
+  }
+
+  .buy-btn,
+  .back-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 12px 26px;
+    border-radius: 10px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: 0.3s ease;
+    min-width: 170px;
+  }
+
+  .buy-btn {
+    background: #16a34a;
+    color: #ffffff;
+  }
+
+  .buy-btn:hover {
+    background: #15803d;
+    transform: translateY(-2px);
+  }
+
+  .back-btn {
+    background: #2563eb;
+    color: #ffffff;
+  }
+
+  .back-btn:hover {
+    background: #1d4ed8;
+    transform: translateY(-2px);
+  }
+</style>
+
+<div class="receipt-wrapper">
+  <div class="receipt-box">
+    <div class="receipt-header">
+      <h2>🎟 Payment Receipt</h2>
+      <p>Thank you for your purchase</p>
+    </div>
+
+    <div class="customer-box">
+      <strong>Customer:</strong> {{ receipt.user }}
+    </div>
 
     {% for movie in receipt.movies %}
     <div class="receipt-item">
-        <span>{{ movie.title }}</span>
-        <strong>$5</strong>
+      <span>{{ movie.title }}</span>
+      <span class="movie-price">$5</span>
     </div>
     {% endfor %}
 
-    <hr>
-
     <div class="receipt-total">
-        <span>Total</span>
-        <strong>${{ receipt.total }}</strong>
+      <span>Total</span>
+      <strong>${{ receipt.total }}</strong>
     </div>
 
-    <a href="{{ url_for('index') }}" class="checkout-btn">Back Dashboard</a>
+    <div class="receipt-footer">
+      <a href="{{ url_for('index') }}" class="back-btn"> ← Back </a>
 
+      <a href="{{ url_for('invoice') }}" class="buy-btn"> 🛒 Buy Now </a>
+    </div>
+  </div>
 </div>
 
 {% endblock %}
