@@ -1,15 +1,18 @@
+/* Reset default style */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
+/* Main body */
 body {
   font-family: "Segoe UI", Arial, sans-serif;
   background: #020617;
   color: #f8fafc;
 }
 
+/* Sidebar */
 .sidebar {
   width: 260px;
   height: 100vh;
@@ -19,6 +22,7 @@ body {
   border-right: 1px solid #1f2937;
 }
 
+/* Sidebar title */
 .sidebar h2 {
   color: #ffffff;
   font-size: 28px;
@@ -26,6 +30,7 @@ body {
   font-weight: 700;
 }
 
+/* Sidebar links */
 .sidebar a {
   display: block;
   text-decoration: none;
@@ -37,22 +42,26 @@ body {
   font-weight: 600;
 }
 
+/* Sidebar hover effect */
 .sidebar a:hover {
   background: #2563eb;
   color: white;
   transform: translateX(4px);
 }
 
+/* Logout button */
 .logout-btn {
   background: rgba(51, 65, 85, 0.7);
   color: #e2e8f0 !important;
 }
 
+/* Main section */
 .main {
   margin-left: 260px;
   padding: 30px;
 }
 
+/* Topbar */
 .topbar {
   background: #111827;
   border: 1px solid #1f2937;
@@ -64,15 +73,18 @@ body {
   margin-bottom: 35px;
 }
 
+/* Topbar heading */
 .topbar h1 {
   font-size: 32px;
   margin-bottom: 5px;
 }
 
+/* Topbar paragraph */
 .topbar p {
   color: #94a3b8;
 }
 
+/* Role badge */
 .role-badge {
   background: #2563eb;
   padding: 10px 18px;
@@ -81,12 +93,14 @@ body {
   text-transform: capitalize;
 }
 
+/* Movie grid */
 .movie-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
   gap: 28px;
 }
 
+/* Movie card */
 .movie-card {
   background: #111827;
   border-radius: 20px;
@@ -95,17 +109,20 @@ body {
   transition: 0.25s;
 }
 
+/* Movie card hover */
 .movie-card:hover {
   transform: translateY(-4px);
   border-color: #2563eb;
 }
 
+/* Movie image */
 .movie-card img {
   width: 100%;
   height: 320px;
   object-fit: cover;
 }
 
+/* No image box */
 .no-image {
   height: 320px;
   display: flex;
@@ -115,21 +132,25 @@ body {
   color: #64748b;
 }
 
+/* Movie information */
 .movie-info {
   padding: 20px;
 }
 
+/* Movie title */
 .movie-info h3 {
   font-size: 23px;
   margin-bottom: 10px;
 }
 
+/* Movie text */
 .movie-info p {
   color: #cbd5e1;
   margin-bottom: 8px;
   font-size: 14px;
 }
 
+/* Action buttons */
 .actions {
   display: flex;
   flex-wrap: wrap;
@@ -137,6 +158,7 @@ body {
   margin-top: 18px;
 }
 
+/* General buttons */
 .actions a,
 .cart-btn,
 .checkout-btn,
@@ -152,6 +174,7 @@ body {
   cursor: pointer;
 }
 
+/* Blue buttons */
 .view-btn,
 .form-box button,
 .auth-box button,
@@ -159,20 +182,24 @@ body {
   background: #2563eb;
 }
 
+/* Cart button */
 .cart-btn {
   background: #1d4ed8;
 }
 
+/* Edit button */
 .edit-btn {
   background: #fbbf24;
   color: #111827 !important;
 }
 
+/* Delete button */
 .delete-btn {
   background: #334155;
   color: #ffffff;
 }
 
+/* Button hover */
 .actions a:hover,
 .cart-btn:hover,
 .checkout-btn:hover,
@@ -182,6 +209,7 @@ body {
   transform: translateY(-2px);
 }
 
+/* Form container */
 .form-box {
   max-width: 700px;
   background: #111827;
@@ -190,6 +218,7 @@ body {
   padding: 32px;
 }
 
+/* Form labels */
 .form-box label {
   display: block;
   margin-bottom: 8px;
@@ -197,14 +226,17 @@ body {
   font-weight: 600;
 }
 
+/* Center text */
 .text-center {
   text-align: center;
 }
 
+/* Margin top */
 .mt-3 {
   margin-top: 1rem;
 }
 
+/* Card */
 .card {
   max-width: 560px;
   margin: 0 auto;
@@ -215,18 +247,21 @@ body {
   box-shadow: 0 12px 30px rgba(15, 23, 42, 0.35);
 }
 
+/* Card title */
 .card h4 {
   font-size: 26px;
   margin-bottom: 12px;
   color: #f8fafc;
 }
 
+/* Card paragraph */
 .card p {
   color: #cbd5e1;
   margin-bottom: 24px;
   line-height: 1.6;
 }
 
+/* Button */
 .btn {
   display: inline-flex;
   align-items: center;
@@ -241,19 +276,23 @@ body {
   cursor: pointer;
 }
 
+/* Danger button */
 .btn-danger {
   background: #dc2626;
 }
 
+/* Secondary button */
 .btn-secondary {
   background: #475569;
 }
 
+/* Button hover */
 .btn:hover {
   opacity: 0.92;
   transform: translateY(-1px);
 }
 
+/* Delete form */
 .delete-form {
   display: inline-flex;
   flex-wrap: wrap;
@@ -261,6 +300,7 @@ body {
   gap: 12px;
 }
 
+/* Inputs and textarea */
 .form-box input,
 .form-box textarea,
 .auth-box input {
@@ -274,21 +314,25 @@ body {
   outline: none;
 }
 
+/* Input focus */
 .form-box input:focus,
 .form-box textarea:focus,
 .auth-box input:focus {
   border-color: #2563eb;
 }
 
+/* Textarea */
 .form-box textarea {
   min-height: 140px;
   resize: vertical;
 }
 
+/* Form button */
 .form-box button {
   width: 100%;
 }
 
+/* Preview image */
 .preview-img {
   width: 180px;
   height: 180px;
@@ -297,6 +341,7 @@ body {
   margin-bottom: 15px;
 }
 
+/* Detail card */
 .detail-card {
   background: #111827;
   border-radius: 22px;
@@ -307,6 +352,7 @@ body {
   gap: 35px;
 }
 
+/* Detail image */
 .detail-card img {
   width: 100%;
   height: 480px;
@@ -314,17 +360,20 @@ body {
   border-radius: 18px;
 }
 
+/* Detail info title */
 .detail-info h2 {
   font-size: 40px;
   margin-bottom: 20px;
 }
 
+/* Detail info paragraph */
 .detail-info p {
   color: #cbd5e1;
   margin-bottom: 16px;
   line-height: 1.6;
 }
 
+/* Cart and receipt box */
 .cart-box,
 .receipt-box {
   background: #111827;
@@ -333,11 +382,13 @@ body {
   padding: 30px;
 }
 
+/* Table */
 table {
   width: 100%;
   border-collapse: collapse;
 }
 
+/* Table heading */
 th {
   background: #020617;
   padding: 16px;
@@ -345,12 +396,14 @@ th {
   color: white;
 }
 
+/* Table data */
 td {
   padding: 16px;
   border-bottom: 1px solid #1f2937;
   color: #cbd5e1;
 }
 
+/* Cart image */
 .cart-img {
   width: 65px;
   height: 85px;
@@ -358,6 +411,7 @@ td {
   object-fit: cover;
 }
 
+/* Cart total */
 .cart-total {
   display: flex;
   justify-content: space-between;
@@ -365,10 +419,12 @@ td {
   margin-top: 25px;
 }
 
+/* Receipt box */
 .receipt-box {
   max-width: 650px;
 }
 
+/* Receipt item */
 .receipt-item {
   display: flex;
   justify-content: space-between;
@@ -376,6 +432,7 @@ td {
   color: #cbd5e1;
 }
 
+/* Receipt total */
 .receipt-total {
   display: flex;
   justify-content: space-between;
@@ -384,6 +441,7 @@ td {
   color: white;
 }
 
+/* Invoice wrapper */
 .invoice-wrapper {
   display: flex;
   justify-content: center;
@@ -391,6 +449,7 @@ td {
   padding: 40px 20px;
 }
 
+/* Invoice box */
 .invoice-box {
   width: 100%;
   max-width: 650px;
@@ -398,40 +457,40 @@ td {
   border-radius: 18px;
   padding: 30px;
   color: #ffffff;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.35);
 }
 
+/* Invoice header */
 .invoice-header {
   text-align: center;
   margin-bottom: 25px;
 }
 
+/* Invoice details */
 .invoice-details {
   margin-bottom: 20px;
   color: #cbd5e1;
 }
 
+/* Invoice detail text */
 .invoice-details p {
   margin-bottom: 8px;
 }
 
+/* Invoice item */
 .invoice-item {
   display: flex;
   justify-content: space-between;
   padding: 15px 0;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-  color: #cbd5e1;
 }
 
+/* Invoice total */
 .invoice-total {
   display: flex;
   justify-content: space-between;
   margin-top: 20px;
-  padding-top: 20px;
-  border-top: 2px dashed rgba(255, 255, 255, 0.15);
-  font-size: 1.1rem;
 }
 
+/* Invoice actions */
 .invoice-actions {
   margin-top: 30px;
   display: flex;
@@ -439,6 +498,7 @@ td {
   gap: 15px;
 }
 
+/* Invoice buttons */
 .invoice-btn,
 .back-btn {
   padding: 12px 25px;
@@ -448,14 +508,17 @@ td {
   font-weight: bold;
 }
 
+/* Invoice button */
 .invoice-btn {
   background: #16a34a;
 }
 
+/* Back button */
 .back-btn {
   background: #2563eb;
 }
 
+/* Authentication body */
 .auth-body {
   min-height: 100vh;
   background: linear-gradient(135deg, #020617, #0f172a, #111827);
@@ -464,6 +527,7 @@ td {
   align-items: center;
 }
 
+/* Authentication box */
 .auth-box {
   width: 420px;
   background: #111827;
@@ -472,76 +536,77 @@ td {
   padding: 40px;
 }
 
+/* Auth title */
 .auth-box h1 {
   text-align: center;
   margin-bottom: 10px;
-  color: #ffffff;
-  font-size: 36px;
 }
 
+/* Auth subtitle */
 .auth-subtitle {
   text-align: center;
   color: #94a3b8;
   margin-bottom: 24px;
 }
 
-.auth-box button {
-  width: 100%;
-}
-
+/* Auth paragraph */
 .auth-box p {
   margin-top: 20px;
   text-align: center;
-  color: #94a3b8;
 }
 
+/* Auth link */
 .auth-box a {
   color: #60a5fa;
   text-decoration: none;
-  font-weight: 600;
 }
 
+/* Error box */
 .error {
   background: rgba(37, 99, 235, 0.12);
-  color: #bfdbfe;
   padding: 12px;
   border-radius: 10px;
-  margin-bottom: 18px;
 }
 
+/* Empty box */
 .empty-box {
   background: #111827;
-  border: 1px solid #1f2937;
-  border-radius: 22px;
   padding: 40px;
 }
 
+/* Responsive */
 @media (max-width: 900px) {
+
+  /* Sidebar responsive */
   .sidebar {
     position: relative;
     width: 100%;
     height: auto;
   }
 
+  /* Main responsive */
   .main {
     margin-left: 0;
   }
 
+  /* Detail card responsive */
   .detail-card {
     grid-template-columns: 1fr;
   }
 
+  /* Topbar responsive */
   .topbar {
     flex-direction: column;
-    gap: 12px;
-    align-items: flex-start;
   }
 }
+
+/* Logo section */
 .logo-box {
   text-align: center;
   margin-bottom: 35px;
 }
 
+/* Logo image */
 .logo {
   width: 95px;
   height: 95px;
@@ -549,48 +614,63 @@ td {
   margin-bottom: 12px;
 }
 
+/* Logo title */
 .logo-box h2 {
   color: white;
   font-size: 24px;
   font-weight: 700;
-    color: white;
-    font-size: 24px;
-    font-weight: 700;
 }
 
-/* top rate */
-
-
+/* Top rate section */
 .rating-box {
-    margin-top: 25px;
-    padding: 20px;
-    background: #0f172a;
-    border: 1px solid #1f2937;
-    border-radius: 18px;
+  margin-top: 25px;
+  padding: 20px;
+  background: #0f172a;
+  border-radius: 18px;
 }
 
+/* Rating title */
 .rating-box h3 {
-    margin-bottom: 12px;
+  margin-bottom: 12px;
 }
 
+/* Star buttons */
 .star-buttons {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-    margin: 15px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin: 15px 0;
 }
 
+/* Star links */
 .star-buttons a {
-    text-decoration: none;
-    color: #fbbf24;
-    font-size: 22px;
-    transition: 0.2s;
+  text-decoration: none;
+  color: #fbbf24;
+  font-size: 22px;
 }
 
+/* Star hover */
 .star-buttons a:hover {
-    transform: translateX(5px);
+  transform: translateX(5px);
 }
 
+/* Current rating */
 .current-rating {
-    color: #cbd5e1;
+  color: #cbd5e1;
+}
+
+/* Preview box */
+.preview-box {
+  margin-top: 15px;
+  text-align: center;
+}
+
+/* Preview image */
+#previewImage {
+  width: 200px;
+  height: 280px;
+  object-fit: cover;
+  border-radius: 12px;
+  border: 2px solid #444;
+  display: none;
 }

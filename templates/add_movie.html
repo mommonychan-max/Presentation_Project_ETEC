@@ -21,11 +21,35 @@
         <textarea name="description" placeholder="Write movie description"></textarea>
 
         <label>Poster Image</label>
-        <input type="file" name="image">
+        <input type="file" name="image" id="imageInput" accept="image/*">
+
+        <div class="preview-box">
+            <img id="previewImage" src="" alt="Preview">
+        </div><br> 
 
         <button type="submit">Add Movie</button>
 
     </form>
 </div>
+
+<script>
+    const imageInput = document.getElementById("imageInput");
+    const previewImage = document.getElementById("previewImage");
+
+    imageInput.addEventListener("change", function () {
+        const file = this.files[0];
+
+        if (file) {
+            const reader = new FileReader();
+
+            reader.onload = function (e) {
+                previewImage.src = e.target.result;
+                previewImage.style.display = "block";
+            };
+
+            reader.readAsDataURL(file);
+        }
+    });
+</script>
 
 {% endblock %}

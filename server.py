@@ -13,7 +13,7 @@ if not os.path.exists(UPLOAD_FOLDER):
     os.makedirs(UPLOAD_FOLDER)
 
 
-# ================= DATABASE =================
+# /* Database */
 def get_db():
     return mysql.connector.connect(
         host='localhost',
@@ -23,16 +23,15 @@ def get_db():
     )
 
 
-# ================= LOGIN REQUIRED CHECK =================
+# /* Login Required */
 def login_required():
     return session.get('user') is not None
 
 
-# ================= HOME =================
+# /* Home */
 @app.route('/')
 def index():
 
-    # 🔐 FORCE LOGIN FIRST
     if not session.get('user'):
         return redirect(url_for('login'))
 
@@ -46,7 +45,7 @@ def index():
     return render_template('index.html', movies=movies)
 
 
-# ================= MOVIE DETAIL =================
+# /* Movie Detail */
 @app.route('/movie/<int:id>')
 def movie_detail(id):
 
@@ -63,7 +62,7 @@ def movie_detail(id):
     return render_template('movie_detail.html', movie=movie)
 
 
-# ================= ADD MOVIE (ADMIN ONLY) =================
+# /* Add Movie */
 @app.route('/add', methods=['GET', 'POST'])
 def add_movie():
 
@@ -85,10 +84,12 @@ def add_movie():
 
         db = get_db()
         cursor = db.cursor()
+
         cursor.execute(
             'INSERT INTO movies (title, genre, movie_year, description, image) VALUES (%s,%s,%s,%s,%s)',
             (title, genre, movie_year, description, filename)
         )
+
         db.commit()
         cursor.close()
         db.close()
@@ -98,7 +99,7 @@ def add_movie():
     return render_template('add_movie.html')
 
 
-# ================= DELETE MOVIE (ADMIN ONLY) =================
+# /* Delete Movie */
 @app.route('/delete/<int:id>', methods=['GET', 'POST'])
 def delete_movie(id):
 
@@ -107,23 +108,32 @@ def delete_movie(id):
 
     db = get_db()
     cursor = db.cursor(dictionary=True)
+
     cursor.execute('SELECT * FROM movies WHERE id=%s', (id,))
     movie = cursor.fetchone()
+
     cursor.close()
 
     if request.method == 'POST':
+
         db = get_db()
         cursor = db.cursor()
-        cursor.execute("DELETE FROM movies WHERE id=%s", (id,))
+
+        cursor.execute(
+            "DELETE FROM movies WHERE id=%s",
+            (id,)
+        )
+
         db.commit()
         cursor.close()
         db.close()
+
         return redirect(url_for('index'))
 
     return render_template('delete_movie.html', movie=movie)
 
 
-# ================= EDIT MOVIE (ADMIN ONLY) =================
+# /* Edit Movie */
 @app.route('/edit/<int:id>', methods=['GET', 'POST'])
 def edit_movie(id):
 
@@ -137,6 +147,7 @@ def edit_movie(id):
     movie = cursor.fetchone()
 
     if request.method == 'POST':
+
         title = request.form['title']
         genre = request.form['genre']
         movie_year = request.form['movie_year']
@@ -145,17 +156,20 @@ def edit_movie(id):
         filename = movie['image'] if movie else ''
 
         file = request.files.get('image')
+
         if file and file.filename:
             filename = secure_filename(file.filename)
             file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
 
         cursor2 = db.cursor()
+
         cursor2.execute(
             'UPDATE movies SET title=%s, genre=%s, movie_year=%s, description=%s, image=%s WHERE id=%s',
             (title, genre, movie_year, description, filename, id)
         )
 
         db.commit()
+
         cursor2.close()
         cursor.close()
         db.close()
@@ -168,7 +182,7 @@ def edit_movie(id):
     return render_template('edit_movie.html', movie=movie)
 
 
-# ================= REGISTER =================
+# /* Register */
 @app.route('/register', methods=['GET', 'POST'])
 def register():
 
@@ -176,6 +190,7 @@ def register():
         return redirect(url_for('index'))
 
     if request.method == 'POST':
+
         username = request.form['username']
         password = request.form['password']
 
@@ -196,7 +211,7 @@ def register():
     return render_template('register.html')
 
 
-# ================= LOGIN =================
+# /* Login */
 @app.route('/login', methods=['GET', 'POST'])
 def login():
 
@@ -229,19 +244,23 @@ def login():
             session['role'] = user['role']
 
             return redirect(url_for('index'))
+
         else:
-            error = "❌ Wrong username or password"
+            error = "Wrong username or password"
 
     return render_template('login.html', error=error)
 
-# ================= LOGOUT =================
+
+# /* Logout */
 @app.route('/logout')
 def logout():
+
     session.clear()
+
     return redirect(url_for('login'))
 
 
-# ================= CART =================
+# /* Add To Cart */
 @app.route('/add_to_cart/<int:id>')
 def add_to_cart(id):
 
@@ -260,6 +279,7 @@ def add_to_cart(id):
     return redirect(url_for('index'))
 
 
+# /* Remove From Cart */
 @app.route('/remove_from_cart/<int:id>', methods=['POST'])
 def remove_from_cart(id):
 
@@ -274,6 +294,8 @@ def remove_from_cart(id):
 
     return redirect(url_for('cart'))
 
+
+# /* Cart */
 @app.route('/cart')
 def cart():
 
@@ -286,9 +308,16 @@ def cart():
     cart_items = session.get('cart', [])
 
     if cart_items:
+
         format_strings = ','.join(['%s'] * len(cart_items))
-        cursor.execute(f"SELECT * FROM movies WHERE id IN ({format_strings})", tuple(cart_items))
+
+        cursor.execute(
+            f"SELECT * FROM movies WHERE id IN ({format_strings})",
+            tuple(cart_items)
+        )
+
         movies = cursor.fetchall()
+
     else:
         movies = []
 
@@ -297,8 +326,14 @@ def cart():
 
     total = len(movies) * 5
 
-    return render_template('cart.html', movies=movies, total=total)
+    return render_template(
+        'cart.html',
+        movies=movies,
+        total=total
+    )
 
+
+# /* Checkout */
 @app.route('/checkout')
 def checkout():
 
@@ -314,13 +349,18 @@ def checkout():
     cursor = db.cursor(dictionary=True)
 
     format_strings = ','.join(['%s'] * len(cart_items))
-    cursor.execute(f"SELECT * FROM movies WHERE id IN ({format_strings})", tuple(cart_items))
+
+    cursor.execute(
+        f"SELECT * FROM movies WHERE id IN ({format_strings})",
+        tuple(cart_items)
+    )
+
     movies = cursor.fetchall()
 
     cursor.close()
     db.close()
 
-    total = len(movies) * 5  #  simple ticket price example
+    total = len(movies) * 5
 
     receipt = {
         "user": session['user'],
@@ -330,7 +370,8 @@ def checkout():
 
     return render_template('receipt.html', receipt=receipt)
 
-# ================= INVOICE =================
+
+# /* Invoice */
 @app.route('/invoice')
 def invoice():
 
@@ -367,7 +408,8 @@ def invoice():
 
     return render_template('invoice.html', invoice=invoice)
 
-# ================= RATE MOVIE =================
+
+# /* Rate Movie */
 @app.route('/rate/<int:id>/<int:star>')
 def rate_movie(id, star):
 
@@ -389,7 +431,7 @@ def rate_movie(id, star):
     return redirect(url_for('movie_detail', id=id))
 
 
-# ================= TOP RATED =================
+# /* Top Rated */
 @app.route('/top-rated')
 def top_rated():
 
@@ -411,6 +453,7 @@ def top_rated():
     return render_template('top_rated.html', movies=movies)
 
 
+# /* Confirm Payment */
 @app.route('/confirm_payment', methods=['POST'])
 def confirm_payment():
 
@@ -445,7 +488,6 @@ def confirm_payment():
         "total": total
     }
 
-    # clear cart after payment
     session['cart'] = []
 
     return render_template(
@@ -453,6 +495,7 @@ def confirm_payment():
         invoice=invoice
     )
 
-# ================= RUN =================
+
+# /* Run App */
 if __name__ == '__main__':
     app.run(debug=True)
